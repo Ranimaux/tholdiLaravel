@@ -2,6 +2,12 @@
 
 use Illuminate\Support\Facades\Route;
 
+use App\Http\Model\PaysQuery ;
+
+$collectionDePays = PaysQuery::create()->find();
+dd($collectionDePays);
+
+
 /*
 |--------------------------------------------------------------------------
 | Web Routes

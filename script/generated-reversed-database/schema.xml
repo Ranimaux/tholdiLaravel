@@ -1,0 +1,160 @@
+<?xml version="1.0" encoding="utf-8"?>
+<database name="default" defaultIdMethod="native" defaultPhpNamingMethod="underscore"  namespace="App\Http\Model">
+  <table name="devis" idMethod="native" phpName="Devis">
+    <column name="codeDevis" phpName="Codedevis" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="dateDevis" phpName="Datedevis" type="DATE" required="true"/>
+    <column name="montantDevis" phpName="Montantdevis" type="DECIMAL" size="10" scale="2" required="true"/>
+    <column name="volume" phpName="Volume" type="SMALLINT"/>
+    <column name="nbContainers" phpName="Nbcontainers" type="SMALLINT"/>
+    <column name="valider" phpName="Valider" type="BOOLEAN" size="1" required="true" defaultValue="false"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="duree" idMethod="native" phpName="Duree">
+    <column name="code" phpName="Code" type="VARCHAR" size="20" primaryKey="true" required="true"/>
+    <column name="nbJours" phpName="Nbjours" type="SMALLINT" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="pays" idMethod="native" phpName="Pays">
+    <column name="codePays" phpName="Codepays" type="CHAR" size="4" primaryKey="true" required="true" defaultValue=""/>
+    <column name="nomPays" phpName="Nompays" type="VARCHAR" size="3" required="true"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reservation" idMethod="native" phpName="Reservation">
+    <column name="codeReservation" phpName="Codereservation" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="dateDebutReservation" phpName="Datedebutreservation" type="DATE" required="true"/>
+    <column name="dateFinReservation" phpName="Datefinreservation" type="DATE" required="true"/>
+    <column name="dateReservation" phpName="Datereservation" type="DATE" required="true"/>
+    <column name="volumeEstime" phpName="Volumeestime" type="SMALLINT"/>
+    <column name="codeDevis" phpName="Codedevis" type="INTEGER"/>
+    <column name="codeVilleMiseDispo" phpName="Codevillemisedispo" type="CHAR" size="3" required="true"/>
+    <column name="codeVilleRendre" phpName="Codevillerendre" type="CHAR" size="3" required="true"/>
+    <column name="codeUtilisateur" phpName="Codeutilisateur" type="INTEGER" required="true"/>
+    <column name="etat" phpName="Etat" type="CHAR" sqlType="enum('Demande de réservation','Demande de réservation validée','Réservation en cours','Réservation terminée','Archivé','Annulé')" required="true" defaultValue="Demande de réservation"/>
+    <foreign-key foreignTable="utilisateur" name="fk_pers">
+      <reference local="codeUtilisateur" foreign="codeUtilisateur"/>
+    </foreign-key>
+    <foreign-key foreignTable="ville" name="fk_villeD">
+      <reference local="codeVilleMiseDispo" foreign="codeVille"/>
+    </foreign-key>
+    <foreign-key foreignTable="ville" name="fk_villeR">
+      <reference local="codeVilleRendre" foreign="codeVille"/>
+    </foreign-key>
+    <foreign-key foreignTable="devis" name="reservation_ibfk_1" onDelete="SET NULL" onUpdate="CASCADE">
+      <reference local="codeDevis" foreign="codeDevis"/>
+    </foreign-key>
+    <index name="fk_devis">
+      <index-column name="codeDevis"/>
+    </index>
+    <index name="fk_villeD">
+      <index-column name="codeVilleMiseDispo"/>
+    </index>
+    <index name="fk_villeR">
+      <index-column name="codeVilleRendre"/>
+    </index>
+    <index name="fk_pers">
+      <index-column name="codeUtilisateur"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="reserver" idMethod="native" phpName="Reserver">
+    <column name="codeReservation" phpName="Codereservation" type="INTEGER" primaryKey="true" required="true" defaultValue="0"/>
+    <column name="numTypeContainer" phpName="Numtypecontainer" type="SMALLINT" primaryKey="true" required="true"/>
+    <column name="qteReserver" phpName="Qtereserver" type="SMALLINT" required="true"/>
+    <foreign-key foreignTable="reservation" name="fk_codres">
+      <reference local="codeReservation" foreign="codeReservation"/>
+    </foreign-key>
+    <foreign-key foreignTable="typeContainer" name="fk_codtyp">
+      <reference local="numTypeContainer" foreign="numTypeContainer"/>
+    </foreign-key>
+    <index name="fk_codtyp">
+      <index-column name="numTypeContainer"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="tarificationContainer" idMethod="native" phpName="Tarificationcontainer">
+    <column name="codeDuree" phpName="Codeduree" type="VARCHAR" size="20" primaryKey="true" required="true"/>
+    <column name="numTypeContainer" phpName="Numtypecontainer" type="SMALLINT" primaryKey="true" required="true"/>
+    <column name="tarif" phpName="Tarif" type="DECIMAL" size="10" scale="2" required="true"/>
+    <foreign-key foreignTable="duree" name="tarificationContainer_ibfk_1" onDelete="CASCADE" onUpdate="CASCADE">
+      <reference local="codeDuree" foreign="code"/>
+    </foreign-key>
+    <foreign-key foreignTable="typeContainer" name="tarificationContainer_ibfk_2">
+      <reference local="numTypeContainer" foreign="numTypeContainer"/>
+    </foreign-key>
+    <index name="numTypeContainer">
+      <index-column name="numTypeContainer"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="typeContainer" idMethod="native" phpName="Typecontainer">
+    <column name="numTypeContainer" phpName="Numtypecontainer" type="SMALLINT" primaryKey="true" required="true"/>
+    <column name="codeTypeContainer" phpName="Codetypecontainer" type="CHAR" size="4" required="true"/>
+    <column name="libelleTypeContainer" phpName="Libelletypecontainer" type="VARCHAR" size="200" required="true"/>
+    <column name="longueurEnMillimetre" phpName="Longueurenmillimetre" type="DECIMAL" size="5" scale="0" required="true"/>
+    <column name="largeurEnMillimetre" phpName="Largeurenmillimetre" type="DECIMAL" size="5" scale="0" required="true"/>
+    <column name="hauteurEnMillimetre" phpName="Hauteurenmillimetre" type="DECIMAL" size="5" scale="0" required="true"/>
+    <column name="masseEnTonne" phpName="Masseentonne" type="DECIMAL" size="5" scale="3"/>
+    <column name="volumeEnMetreCube" phpName="Volumeenmetrecube" type="DECIMAL" size="4" scale="2"/>
+    <column name="capaciteDeChargeEnTonne" phpName="Capacitedechargeentonne" type="DECIMAL" size="5" scale="3"/>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="utilisateur" idMethod="native" phpName="Utilisateur">
+    <column name="codeUtilisateur" phpName="Codeutilisateur" type="INTEGER" primaryKey="true" autoIncrement="true" required="true"/>
+    <column name="raisonSociale" phpName="Raisonsociale" type="VARCHAR" size="50" required="true"/>
+    <column name="adresse" phpName="Adresse" type="VARCHAR" size="80" required="true"/>
+    <column name="cp" phpName="Cp" type="CHAR" size="5"/>
+    <column name="ville" phpName="Ville" type="VARCHAR" size="40"/>
+    <column name="adrMel" phpName="Adrmel" type="VARCHAR" size="100"/>
+    <column name="telephone" phpName="Telephone" type="CHAR" size="10"/>
+    <column name="contact" phpName="Contact" type="VARCHAR" size="50"/>
+    <column name="codePays" phpName="Codepays" type="CHAR" size="4" required="true"/>
+    <column name="identifiant" phpName="Identifiant" type="CHAR" size="10" required="true"/>
+    <column name="password" phpName="Password" type="VARCHAR" size="255" required="true"/>
+    <column name="profil" phpName="Profil" type="CHAR" sqlType="enum('client','gestionnaire')" required="true" defaultValue="client"/>
+    <column name="nombreDeTentativesDeConnexion" phpName="Nombredetentativesdeconnexion" type="TINYINT" required="true" defaultValue="0"/>
+    <column name="derniereTentativeDeConnexionNonValide" phpName="Dernieretentativedeconnexionnonvalide" type="DATETIME"/>
+    <foreign-key foreignTable="pays" name="fk_perspays">
+      <reference local="codePays" foreign="codePays"/>
+    </foreign-key>
+    <index name="fk_perspays">
+      <index-column name="codePays"/>
+    </index>
+    <unique name="login">
+      <unique-column name="identifiant"/>
+    </unique>
+    <unique name="identifiant">
+      <unique-column name="identifiant"/>
+    </unique>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+  <table name="ville" idMethod="native" phpName="Ville">
+    <column name="codeVille" phpName="Codeville" type="CHAR" size="3" primaryKey="true" required="true" defaultValue=""/>
+    <column name="nomVille" phpName="Nomville" type="VARCHAR" size="30" required="true"/>
+    <column name="codePays" phpName="Codepays" type="CHAR" size="4" required="true"/>
+    <foreign-key foreignTable="pays" name="fk_pays">
+      <reference local="codePays" foreign="codePays"/>
+    </foreign-key>
+    <index name="fk_pays">
+      <index-column name="codePays"/>
+    </index>
+    <vendor type="mysql">
+      <parameter name="Engine" value="InnoDB"/>
+    </vendor>
+  </table>
+</database>
