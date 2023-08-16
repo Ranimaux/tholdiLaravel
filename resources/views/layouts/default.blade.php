@@ -24,6 +24,7 @@
             <div class="container-fluid serif">
                 <span class="navbar-brand fantasy"></span>
                 <div class="collapse navbar-collapse" id="navbarsExample05">
+                    @if(Session::has('utilisateur')==true)
                     <ul class="navbar-nav  mb-2 ">
                         <li class="nav-item">
                             <a class="nav-link active  " aria-current="page" href="#">Accueil</a>
@@ -51,16 +52,25 @@
                                 <li><a class="dropdown-item" href="#">Répartition géographique (par lieu de mise à disposition)</a></li>
                             </ul>
                         </li>
-                    </ul>
 
+
+                    </ul>
+                    
+                    
 
                 </div>
-
+                <div class="me-3 ">
+                    <a class="btn btn-primary btn-sm" href="{{route('r-deconnexion')}}" role="button">Déconnexion</a>
+                    
+                </div>
+                @endif
             </div>
         </nav>
-
+        @if(Session::has('utilisateur')==false)
         <div class="container ">
-            <form >
+
+            <form name="form-authentification" method="post" action="{{ route('r-authentification') }}">
+                @csrf
                 <div class="row mt-3 ">
                     <div class="col-5"> 
                     </div>
@@ -84,8 +94,12 @@
                 </div>
 
             </form>
+            <hr class="border border-dark border-1  me-2 opacity-50 w-75 float-end">
         </div>
-        <hr class="border border-dark border-1  me-2 opacity-50 w-75 float-end">
+        @endif      
+
+
+
 
         <div class="container ">
 
