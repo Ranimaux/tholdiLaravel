@@ -5,7 +5,9 @@ Skeleton Application
 Mise en place du model (ORM Propel)
 +
 Mise en place de l'authentification
++
+Mise en place de la saisie d'une réservation de containers
++
+Mise en place de la consultation des réservations
 
 #ressources
-https://phppasswordhash.com/
-https://laravel.com/docs/10.x/hashing#verifying-that-a-password-matches-a-hash

@@ -33,8 +33,8 @@
                         <li class="nav-item dropdown">
                             <a class="nav-link dropdown-toggle" href="#" data-bs-toggle="dropdown" aria-expanded="false">Réservation</a>
                             <ul class="dropdown-menu">
-                                <li><a class="dropdown-item" href="#">Effectuer une réservation</a></li>
-                                <li><a class="dropdown-item" href="#">Consulter vos réservations</a></li>
+                                <li><a class="dropdown-item" href="{{route('r-saisirReservation')}}">Effectuer une réservation</a></li>
+                                <li><a class="dropdown-item" href="{{route('r-consulterLesReservations')}}">Consulter vos réservations</a></li>
                                 <li><a class="dropdown-item" href="#">Rechercher une réservation</a></li>
                             </ul>
                         </li>
@@ -96,25 +96,15 @@
             </form>
             <hr class="border border-dark border-1  me-2 opacity-50 w-75 float-end">
         </div>
-        @endif      
-
-
-
-
+        @endif  
         <div class="container ">
 
-            <h1 class="display-4">@yield("title")</h1>
+            <h1 class="display-4">
+                @yield("title")
+            </h1>
             <p class="lead"> 
                 @yield("content")
             </p>
         </div>
-
-
-
-
-
-
-
-
     </body>
 </html>

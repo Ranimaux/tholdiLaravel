@@ -2,6 +2,7 @@
 
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\AuthentificationController;
+use App\Http\Controllers\ReservationController;
 
 /*
   |--------------------------------------------------------------------------
@@ -23,3 +24,17 @@ Route::post('/authentification', [AuthentificationController::class, 'authentifi
 
 Route::get('/deconnexion', [AuthentificationController::class, 'deconnexion'])
         ->name('r-deconnexion');
+
+Route::group(['prefix' => 'reservation'], function () {
+    Route::get('saisirReservation', [ReservationController::class, 'saisirReservation'])
+            ->name('r-saisirReservation');
+    Route::post('ajouterReservation', [ReservationController::class, 'ajouterReservation'])
+            ->name('r-ajouterReservation');
+    Route::post('ajouterLigneReservation', [ReservationController::class, 'ajouterLigneDeReservation'])
+            ->name('r-ajouterLigneReservation');
+    Route::post('finaliserLaReservation', [ReservationController::class, 'finaliserLaReservation'])
+            ->name('r-finaliserLaReservation');   
+    Route::get('consulterLesReservations', [ReservationController::class, 'consulterLesReservations'])
+            ->name('r-consulterLesReservations'); 
+});
+
