@@ -13,6 +13,15 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+//use App\Http\Model\PaysQuery ;
+//
+//$collectionDePays = PaysQuery::create()->find();
+//dd($collectionDePays);
+
+Route::get('/', function() {
+    return view('accueil.accueil');
+});
+
 Route::get('/', function () {
     return view('welcome');
 });
