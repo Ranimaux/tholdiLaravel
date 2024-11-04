@@ -19,7 +19,7 @@
                 <div class="card-body">
                     <div class="form-group">
                         <label for="container">Liste des containers</label>
-                        <select class="custom-select" id="container" name="container">
+                        <select class="custom-select" id="container" name="container" required>
                             @foreach($typeContainer as $unTypeContainer) 
                             <option  value="{{ $unTypeContainer->getNumtypecontainer() }}"> 
                                 {{ $unTypeContainer->getLibelletypecontainer() }}</option>
@@ -31,7 +31,7 @@
 
                     <div class="form-group">
                         <label class="control-label" for="quantite">Quantité</label>
-                        <input type="number"  id="quantite" name="quantite" class="form-control" placeholder="Saisir la quantité">
+                        <input type="number"  id="quantite" name="quantite" class="form-control" placeholder="Saisir la quantité" required min="1">
                     </div>  
                     <br>
                     <div class="form-group float-right">
@@ -84,17 +84,19 @@
 
     </div>
     <div class="col-lg-4">
+        @isset($collectionReserver)
         <form action="{{ route("r-finaliserLaReservation") }}" method="post" >
             {{ csrf_field() }}
             <button type="submit" id="buttonAddReservation" name="buttonAddReservation" class="btn btn-primary btn-lg">
                 Valider la demande de réservation
             </button>&nbsp;&nbsp;&nbsp;&nbsp;&nbsp;
         </form>
-
+        @endisset
     </div>
 </div>
 
-
+<script>
+</script>
 
 
 

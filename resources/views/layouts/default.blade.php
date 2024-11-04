@@ -11,6 +11,8 @@
         <link href="{!! asset('css/custom.css') !!}" rel="stylesheet">
         <!-- Custom JS -->
         <script src="{{ asset('js/custom.js')}}"></script>
+
+
         <link rel="stylesheet" href="{{asset('css/app.css')}}"/>
     </head>
     <body> 
@@ -49,11 +51,16 @@
                                 <li><a class="dropdown-item" href="#">Répartition géographique (par lieu de mise à disposition)</a></li>
                             </ul>
                         </li>
-                    </ul>         
+
+
+                    </ul>
+                    
+                    
+
                 </div>
                 <div class="me-3 ">
                     <a class="btn btn-primary btn-sm" href="{{route('r-deconnexion')}}" role="button">Déconnexion</a>
-
+                    
                 </div>
                 @endif
             </div>
@@ -89,6 +96,10 @@
             <hr class="border border-dark border-1  me-2 opacity-50 w-75 float-end">
         </div>
         @endif      
+
+
+
+
         <div class="container ">
 
             <h1 class="display-4">@yield("title")</h1>
@@ -96,5 +107,13 @@
                 @yield("content")
             </p>
         </div>
+
+
+
+
+
+
+
+
     </body>
 </html>

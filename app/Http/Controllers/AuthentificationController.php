@@ -6,8 +6,8 @@ use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Hash;
 use App\Http\Model\UtilisateurQuery;
 
-class AuthentificationController extends Controller
-{
+class AuthentificationController extends Controller {
+
     public function authentificationCompteUtilisateur(Request $request) {
         $identifiant = $request->post("identifiant");
         $password = $request->post("password");
@@ -19,5 +19,6 @@ class AuthentificationController extends Controller
             $request->session()->put('utilisateur', $compteExistant);
         }
         return back();
-}
+    }
+
 }
